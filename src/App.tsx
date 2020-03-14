@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import GlobalState from './Context/GlobalState';
+
+const Test1 = () => {
+  const getOne = GlobalState.useStoreState(state => state.getSomething1);
+  const setOn  = GlobalState.useStoreActions(actions => actions.setOn);
+  const on     = GlobalState.useStoreState(state => state.on);
+
+  return <>
+  <label>
+    On:{' '}
+    {/* Checking this box fires off all fetch requests */}
+    <input type="checkbox" 
+           checked={on} 
+           onChange={e => setOn(e.target.checked)} />
+  </label>
+  </>
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalState.Provider>
+      <div className="App">
+        <header className="App-header">
+          <Test1 />
+        </header>
+      </div>
+    </GlobalState.Provider>
   );
 }
 
